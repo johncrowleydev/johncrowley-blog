@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!post) return {};
 
   return {
-    title: `${post.title} | John Crowley`,
+    title: `${post.title} | The Crowley Review`,
     description: post.excerpt
   };
 }
@@ -41,21 +41,20 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <main className="shell article-shell">
       <div className="article-topbar">
-        <Link href="/" className="back-link">← Publication home</Link>
-        <div className="article-topbar-right">
-          <div className="article-topbar-meta">
-            <span className="category-chip inline-chip">{post.category}</span>
-            <p className="post-meta">{post.date} · {post.readingTime}</p>
-          </div>
-          <ThemeToggle />
-        </div>
+        <Link href={`/sections/${post.categorySlug}`} className="back-link">← Back to {post.category}</Link>
+        <ThemeToggle />
       </div>
 
       <article className="article-layout">
-        <header className="article-header">
-          <p className="section-kicker">Feature</p>
+        <header className="article-header publication-article-header">
+          <p className="publication-kicker">The Crowley Review</p>
+          <p className="category-chip inline-chip">{post.category}</p>
           <h1 className="article-title">{post.title}</h1>
           <p className="article-dek">{post.excerpt}</p>
+          <div className="article-meta-row">
+            <p className="post-meta">By John Crowley</p>
+            <p className="post-meta">{post.date} · {post.readingTime}</p>
+          </div>
         </header>
 
         <div className="article-body markdown">{content}</div>
