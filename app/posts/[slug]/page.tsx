@@ -23,15 +23,20 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   if (!post) notFound();
 
   return (
-    <main className="shell post-shell">
-      <Link href="/" className="back-link">← Back to home</Link>
-      <article className="article">
+    <main className="shell article-shell">
+      <div className="article-topbar">
+        <Link href="/" className="back-link">← All articles</Link>
+        <p className="post-meta">{post.date} · {post.readingTime}</p>
+      </div>
+
+      <article className="article-layout">
         <header className="article-header">
-          <p className="post-meta">{post.date} · {post.readingTime}</p>
-          <h1>{post.title}</h1>
-          <p className="lede">{post.excerpt}</p>
+          <p className="section-kicker">Analysis</p>
+          <h1 className="article-title">{post.title}</h1>
+          <p className="article-dek">{post.excerpt}</p>
         </header>
-        <div className="markdown" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+
+        <div className="article-body markdown" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
       </article>
     </main>
   );
