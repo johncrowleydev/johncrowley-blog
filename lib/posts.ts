@@ -11,6 +11,7 @@ export type Post = {
   title: string;
   date: string;
   excerpt: string;
+  category: string;
   contentHtml: string;
   readingTime: string;
 };
@@ -19,6 +20,7 @@ type Frontmatter = {
   title: string;
   date: string;
   excerpt: string;
+  category?: string;
 };
 
 function estimateReadingTime(content: string) {
@@ -54,6 +56,7 @@ export function getPostBySlug(slug: string): Post | null {
     title: frontmatter.title,
     date: frontmatter.date,
     excerpt: frontmatter.excerpt,
+    category: frontmatter.category ?? 'General',
     contentHtml: processedContent.toString(),
     readingTime: estimateReadingTime(content)
   };

@@ -25,13 +25,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   return (
     <main className="shell article-shell">
       <div className="article-topbar">
-        <Link href="/" className="back-link">← All articles</Link>
-        <p className="post-meta">{post.date} · {post.readingTime}</p>
+        <Link href="/" className="back-link">← Publication home</Link>
+        <div className="article-topbar-meta">
+          <span className="category-chip">{post.category}</span>
+          <p className="post-meta">{post.date} · {post.readingTime}</p>
+        </div>
       </div>
 
       <article className="article-layout">
         <header className="article-header">
-          <p className="section-kicker">Analysis</p>
+          <p className="section-kicker">Feature</p>
           <h1 className="article-title">{post.title}</h1>
           <p className="article-dek">{post.excerpt}</p>
         </header>

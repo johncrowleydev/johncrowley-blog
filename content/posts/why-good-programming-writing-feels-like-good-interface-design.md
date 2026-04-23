@@ -1,0 +1,41 @@
+---
+title: "Why good programming writing feels like good interface design"
+date: "2026-04-23"
+category: "Programming"
+excerpt: "The best technical writing does the same thing the best software does: it lowers friction, reveals structure, and makes complex systems feel navigable without flattening them."
+---
+
+A lot of technical writing is treated as explanation after the fact. The code is the product, and the words are the packaging.
+
+That view misses something important. In practice, writing is part of the interface. It shapes how people enter a system, how quickly they build an accurate mental model, and how long they trust the tool once something breaks.
+
+## Why this matters for engineers
+
+Engineers often talk about clarity as if it were mostly a property of implementation. But clarity is distributed. It lives partly in naming, partly in architecture, partly in documentation, and partly in the sequence in which ideas are introduced.
+
+That is why so many good codebases also have good prose. The same sensibility shows up in both places: avoid needless indirection, expose the important idea early, and do not make the reader pay for the author's uncertainty.
+
+## Documentation is a product surface
+
+A user does not experience a system as source code alone. They experience it as a chain of interfaces:
+
+- the landing page
+- the getting-started guide
+- the API reference
+- the examples
+- the error messages
+- the code itself
+
+When those pieces align, the product feels coherent. When they do not, the user experiences a kind of conceptual packet loss. The system may still be powerful, but it stops feeling legible.
+
+## The best writing is not ornamental
+
+There is a temptation to make technical prose either aggressively minimal or needlessly theatrical. Both approaches can fail.
+
+The better standard is precision with momentum. A good article should move. It should make the next idea feel easier than the last one. That does not mean stripping away voice. It means using voice in service of structure rather than as decoration on top of it.
+
+## The engineering lesson
+
+This is one reason engineers benefit from learning to write seriously. Writing forces a confrontation with sequence, emphasis, ambiguity, and reader expectations. Those are not side concerns. They are core design concerns.
+
+Good software and good prose are both, at bottom, systems for making thought transferable.

@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'John Crowley — Systems, Software & AI',
-  description: 'An editorial-style technical publication covering AI tooling, software systems, and practical engineering workflows.',
+  title: 'John Crowley — Systems, Software, Science & Art',
+  description: 'A publication-style personal site featuring in-depth articles on programming, AI, engineering, mathematics, photography, and music.',
   metadataBase: new URL('https://johncrowleydev.github.io/johncrowley-blog/')
 };
 
