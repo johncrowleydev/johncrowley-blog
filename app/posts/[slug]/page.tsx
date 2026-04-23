@@ -1,7 +1,11 @@
 import Link from 'next/link';
 import ThemeToggle from '@/app/theme-toggle';
-import { notFound } from 'next/navigation';
+import { mdxComponents } from '@/app/mdx-components';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
+import { withBasePath } from '@/lib/site';
+import { notFound } from 'next/navigation';
+import { evaluate } from '@mdx-js/mdx';
+import * as runtime from 'react/jsx-runtime';
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }));
@@ -18,10 +22,22 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+async function renderMdx(source: string) {
+  const evaluated = await evaluate(source, {
+    ...runtime,
+    useMDXComponents: () => mdxComponents,
+    development: false
+  });
+
+  const Content = evaluated.default;
+  return <Content components={mdxComponents} />;
+}
+
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) notFound();
+  const content = await renderMdx(post.content);
 
   return (
     <main className="shell article-shell">
@@ -41,9 +57,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <p className="section-kicker">Feature</p>
           <h1 className="article-title">{post.title}</h1>
           <p className="article-dek">{post.excerpt}</p>
+          {post.image ? (
+            <img src={withBasePath(post.image)} alt={post.title} className="article-hero-image" />
+          ) : null}
         </header>
 
-        <div className="article-body markdown" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
+        <div className="article-body markdown">{content}</div>
       </article>
     </main>
   );

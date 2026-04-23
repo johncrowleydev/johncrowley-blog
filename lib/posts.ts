@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
 
@@ -12,7 +10,8 @@ export type Post = {
   date: string;
   excerpt: string;
   category: string;
-  contentHtml: string;
+  image?: string;
+  content: string;
   readingTime: string;
 };
 
@@ -21,6 +20,7 @@ type Frontmatter = {
   date: string;
   excerpt: string;
   category?: string;
+  image?: string;
 };
 
 function estimateReadingTime(content: string) {
@@ -33,9 +33,9 @@ export function getAllPosts(): Post[] {
   const fileNames = fs.readdirSync(postsDirectory);
 
   return fileNames
-    .filter((name) => name.endsWith('.md'))
+    .filter((name) => name.endsWith('.mdx'))
     .map((fileName) => {
-      const slug = fileName.replace(/\.md$/, '');
+      const slug = fileName.replace(/\.mdx$/, '');
       return getPostBySlug(slug);
     })
     .filter((post): post is Post => Boolean(post))
@@ -43,13 +43,12 @@ export function getAllPosts(): Post[] {
 }
 
 export function getPostBySlug(slug: string): Post | null {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
+  const fullPath = path.join(postsDirectory, `${slug}.mdx`);
   if (!fs.existsSync(fullPath)) return null;
 
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
   const frontmatter = data as Frontmatter;
-  const processedContent = remark().use(html).processSync(content);
 
   return {
     slug,
@@ -57,7 +56,8 @@ export function getPostBySlug(slug: string): Post | null {
     date: frontmatter.date,
     excerpt: frontmatter.excerpt,
     category: frontmatter.category ?? 'General',
-    contentHtml: processedContent.toString(),
+    image: frontmatter.image,
+    content,
     readingTime: estimateReadingTime(content)
   };
 }

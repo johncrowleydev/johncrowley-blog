@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import ThemeToggle from './theme-toggle';
 import { getAllPosts, type Post } from '@/lib/posts';
+import { withBasePath } from '@/lib/site';
 
 const sections = [
   'Programming',
@@ -18,6 +19,11 @@ function groupByCategory(posts: Post[]) {
       posts: posts.filter((post) => post.category === category).slice(0, 2)
     }))
     .filter((group) => group.posts.length > 0);
+}
+
+function StoryImage({ post, className }: { post: Post; className: string }) {
+  if (!post.image) return null;
+  return <img src={withBasePath(post.image)} alt={post.title} className={className} />;
 }
 
 export default function HomePage() {
@@ -61,6 +67,7 @@ export default function HomePage() {
       <section className="lead-grid">
         {featured && (
           <article className="lead-story">
+            <StoryImage post={featured} className="lead-story-image" />
             <p className="category-chip">{featured.category}</p>
             <p className="post-meta">{featured.date} · {featured.readingTime}</p>
             <h2>{featured.title}</h2>
@@ -72,6 +79,7 @@ export default function HomePage() {
         <div className="secondary-column">
           {second && (
             <article className="secondary-story">
+              <StoryImage post={second} className="secondary-story-image" />
               <p className="category-chip">{second.category}</p>
               <p className="post-meta">{second.date} · {second.readingTime}</p>
               <h3>{second.title}</h3>
@@ -106,11 +114,14 @@ export default function HomePage() {
         <div className="latest-list">
           {rest.slice(0, 4).map((post) => (
             <article key={post.slug} className="story-list-item">
-              <div>
-                <p className="category-chip inline-chip">{post.category}</p>
-                <p className="post-meta">{post.date} · {post.readingTime}</p>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt}</p>
+              <div className="story-list-main">
+                <StoryImage post={post} className="story-list-image" />
+                <div>
+                  <p className="category-chip inline-chip">{post.category}</p>
+                  <p className="post-meta">{post.date} · {post.readingTime}</p>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt}</p>
+                </div>
               </div>
               <Link href={`/posts/${post.slug}`} className="text-link">Open article</Link>
             </article>
@@ -128,10 +139,13 @@ export default function HomePage() {
             <div className="category-story-list">
               {group.posts.map((post) => (
                 <article key={post.slug} className="section-story-row">
-                  <div>
-                    <p className="post-meta">{post.date} · {post.readingTime}</p>
-                    <h3>{post.title}</h3>
-                    <p>{post.excerpt}</p>
+                  <div className="story-list-main">
+                    <StoryImage post={post} className="story-list-image" />
+                    <div>
+                      <p className="post-meta">{post.date} · {post.readingTime}</p>
+                      <h3>{post.title}</h3>
+                      <p>{post.excerpt}</p>
+                    </div>
                   </div>
                   <Link href={`/posts/${post.slug}`} className="text-link">Read more</Link>
                 </article>
