@@ -2,7 +2,6 @@ import Link from 'next/link';
 import ThemeToggle from '@/app/theme-toggle';
 import { mdxComponents } from '@/app/mdx-components';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
-import { withBasePath } from '@/lib/site';
 import { notFound } from 'next/navigation';
 import { evaluate } from '@mdx-js/mdx';
 import * as runtime from 'react/jsx-runtime';
@@ -57,9 +56,6 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           <p className="section-kicker">Feature</p>
           <h1 className="article-title">{post.title}</h1>
           <p className="article-dek">{post.excerpt}</p>
-          {post.image ? (
-            <img src={withBasePath(post.image)} alt={post.title} className="article-hero-image" />
-          ) : null}
         </header>
 
         <div className="article-body markdown">{content}</div>
