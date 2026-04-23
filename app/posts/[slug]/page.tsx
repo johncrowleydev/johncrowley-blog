@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ThemeToggle from '@/app/theme-toggle';
 import { notFound } from 'next/navigation';
 import { getAllPosts, getPostBySlug } from '@/lib/posts';
 
@@ -26,9 +27,12 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     <main className="shell article-shell">
       <div className="article-topbar">
         <Link href="/" className="back-link">← Publication home</Link>
-        <div className="article-topbar-meta">
-          <span className="category-chip">{post.category}</span>
-          <p className="post-meta">{post.date} · {post.readingTime}</p>
+        <div className="article-topbar-right">
+          <div className="article-topbar-meta">
+            <span className="category-chip inline-chip">{post.category}</span>
+            <p className="post-meta">{post.date} · {post.readingTime}</p>
+          </div>
+          <ThemeToggle />
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ThemeToggle from './theme-toggle';
 import { getAllPosts, type Post } from '@/lib/posts';
 
 const sections = [
@@ -29,11 +30,14 @@ export default function HomePage() {
       <header className="publication-header">
         <div className="brand-row">
           <p className="eyebrow">John Crowley</p>
-          <nav className="top-nav" aria-label="Sections">
-            {sections.map((section) => (
-              <a key={section} href={`#${section.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{section}</a>
-            ))}
-          </nav>
+          <div className="header-actions">
+            <nav className="top-nav" aria-label="Sections">
+              {sections.map((section) => (
+                <a key={section} href={`#${section.toLowerCase().replace(/[^a-z]+/g, '-')}`}>{section}</a>
+              ))}
+            </nav>
+            <ThemeToggle />
+          </div>
         </div>
 
         <div className="masthead">
@@ -44,7 +48,7 @@ export default function HomePage() {
               and music — written with personality, but presented like a serious publication.
             </p>
           </div>
-          <div className="mission-card">
+          <div className="mission-note">
             <p className="section-kicker">Editorial focus</p>
             <p>
               Technical judgment, creative practice, and the connective tissue between software,
@@ -65,7 +69,7 @@ export default function HomePage() {
           </article>
         )}
 
-        <div className="secondary-stack">
+        <div className="secondary-column">
           {second && (
             <article className="secondary-story">
               <p className="category-chip">{second.category}</p>
@@ -99,13 +103,15 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="latest-grid">
+        <div className="latest-list">
           {rest.slice(0, 4).map((post) => (
-            <article key={post.slug} className="story-card">
-              <p className="category-chip">{post.category}</p>
-              <p className="post-meta">{post.date} · {post.readingTime}</p>
-              <h3>{post.title}</h3>
-              <p>{post.excerpt}</p>
+            <article key={post.slug} className="story-list-item">
+              <div>
+                <p className="category-chip inline-chip">{post.category}</p>
+                <p className="post-meta">{post.date} · {post.readingTime}</p>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt}</p>
+              </div>
               <Link href={`/posts/${post.slug}`} className="text-link">Open article</Link>
             </article>
           ))}
@@ -119,12 +125,14 @@ export default function HomePage() {
               <p className="section-kicker">Section</p>
               <h2>{group.category}</h2>
             </div>
-            <div className="category-story-grid">
+            <div className="category-story-list">
               {group.posts.map((post) => (
-                <article key={post.slug} className="story-row-card">
-                  <p className="post-meta">{post.date} · {post.readingTime}</p>
-                  <h3>{post.title}</h3>
-                  <p>{post.excerpt}</p>
+                <article key={post.slug} className="section-story-row">
+                  <div>
+                    <p className="post-meta">{post.date} · {post.readingTime}</p>
+                    <h3>{post.title}</h3>
+                    <p>{post.excerpt}</p>
+                  </div>
                   <Link href={`/posts/${post.slug}`} className="text-link">Read more</Link>
                 </article>
               ))}
